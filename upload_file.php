@@ -1,28 +1,29 @@
 <?php
-
-/**
- * 利用上传文件时间生成唯一ID，用于解决用户一次选择多个文件时，文件名相同的问题
- * @return int Unix时间戳小数点右移四位取整
- */
+echo '<img src="assets/unnamed.png"><br><br>';
+set_time_limit(0);
 function upload_time() {
     list($msec, $sec) = explode(" ", microtime());
-    return ((int)$sec . (int)($msec * 10000));
+    return ((int)$sec . (int)($msec * 100000000));
 }
-
 if (!empty($_FILES['files']['name'][0])) {
-    
+
     $files = $_FILES['files'];
+    for ($i = 0; $i < count($files['name']); $i++) {
 
-    for ($i = 0; $i < count($files['name']); $i++) { 
-        
         if ($files['error'][$i] == 0) {
-
-            move_uploaded_file($files['tmp_name'][$i], upload_time() . $files['name'][$i]);
+$moved_file ='images/'.upload_time() . $files['name'][$i];
+          move_uploaded_file($files['tmp_name'][$i], $moved_file);
+          echo 'file uploaded. Remember to hydrate<br><br>';
 
         }
-        
-    }
 
+    }
 }
 
+echo '<script type="text/javascript">
+function goback(){
+window.location = "http://antoniowp.idxsandbox.com/nar15/"
+ }
+ setTimeout(goback, 3000);
+</script>';
 ?>
